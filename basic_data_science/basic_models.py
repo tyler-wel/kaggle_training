@@ -2,7 +2,7 @@
 
 import os
 # Import basic housing data
-from data_import import training_housing_data, test_housing_data
+from __data_import import training_housing_data, test_housing_data
 import numpy as np # linear algebra
 import pandas as pd # data processing, CSV file I/O (e.g. pd.read_csv)
 
@@ -63,7 +63,7 @@ print("Validation MAE: {:,.0f}".format(val_mae))
 real_predictions = model.predict(X_test) 
 
 # Save the prediction values for submission
-output = pd.DataFrame({'Id': test_housing_data.Id,'SalePrice': real_predictions})
+output = pd.DataFrame({'Id': test_housing_data.index,'SalePrice': real_predictions})
 print("Mean SalePrice: " + "{0:,.2f}".format(output['SalePrice'].mean()))
 
 
@@ -78,7 +78,7 @@ model_5 = RandomForestRegressor(n_estimators=100, max_depth=7, random_state=0)
 
 models = [model_1, model_2, model_3, model_4, model_5]
 print("Scoring various models: ")
-from model_scoring import score_basic_model
+from __model_scoring import score_basic_model
 for i in range(0, len(models)):
     mae = score_basic_model(models[i], train_X, val_X, train_y, val_y)
     print("Model {} MAE: {}".format(i+1, mae))

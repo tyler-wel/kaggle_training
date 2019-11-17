@@ -1,7 +1,7 @@
 # Here, we will use pipelines and cross validations to show one way to test different models and determine which is "best"
 import os
 # Import basic housing data
-from data_import import training_housing_data, test_housing_data
+from __data_import import training_housing_data, test_housing_data
 import numpy as np # linear algebra
 import pandas as pd # data processing, CSV file I/O (e.g. pd.read_csv)
 
@@ -16,12 +16,12 @@ numeric_cols = [colname for colname in training_housing_data.columns if training
 X = training_housing_data[numeric_cols].copy()
 X_test = test_housing_data[numeric_cols].copy()
 
-from model_scoring import get_pipeline_score
+from __model_scoring import get_pipeline_score
 # Using get_pipeline_score from model_scoring, test different values for the number of trees (n_estimators) of a random forest model.
 results = {}
 for i in range(50, 401, 50):
     results[i] = get_pipeline_score(i, X, y)
-
+print(results)
 # plot our results to visualize the different models
 import matplotlib.pyplot as plt
 

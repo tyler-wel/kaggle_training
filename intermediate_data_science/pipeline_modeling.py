@@ -1,7 +1,7 @@
 # This file shows more intermediate ideas and data modeling from kaggle learning module(s)
 import os
 # Import basic housing data
-from data_import import training_housing_data as X_full, test_housing_data as X_test_full
+from __data_import import training_housing_data as X_full, test_housing_data as X_test_full
 import numpy as np # linear algebra
 import pandas as pd # data processing, CSV file I/O (e.g. pd.read_csv)
 
@@ -86,7 +86,7 @@ predictions = my_pipeline.predict(X_validation)
 # print("Average MAE score: " + "{0:,.2f}".format(scores.mean()))
 
 # Evaluate the model (cross validation from model_scoring)
-from model_scoring import score_pipeline_validation
+from __model_scoring import score_pipeline_validation
 mean_score = score_pipeline_validation(my_pipeline, X_train, y_train)
 print(mean_score)
 print("Average MAE score: " + "{0:,.2f}".format(mean_score))
