@@ -86,8 +86,8 @@ predictions = my_pipeline.predict(X_validation)
 # print("Average MAE score: " + "{0:,.2f}".format(scores.mean()))
 
 # Evaluate the model (cross validation from model_scoring)
-from __model_scoring import score_pipeline_validation
-mean_score = score_pipeline_validation(my_pipeline, X_train, y_train)
+from my_modules import __model_scoring
+mean_score = __model_scoring.score_pipeline_validation(my_pipeline, X_train, y_train)
 print(mean_score)
 print("Average MAE score: " + "{0:,.2f}".format(mean_score))
 
