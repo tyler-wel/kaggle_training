@@ -64,3 +64,8 @@ def import_fifa():
     fifa_data = pd.read_csv(fifa_path, index_col="Date", parse_dates=True)
     print(colored('Fifa data imported', 'green'))
     return fifa_data
+
+def import_spotify():
+    spotify_data = pd.read_csv(spotify_path, index_col="Date", parse_dates=True)
+    print(colored("Spotify data imported!", 'green'))
+    return spotify_data
