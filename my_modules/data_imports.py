@@ -74,3 +74,8 @@ def import_flight_delays():
     flight_delay_data = pd.read_csv(flight_delays_path, index_col="Month")
     print(colored("Flight delay data imported!", 'green'))
     return flight_delay_data
+
+def import_insurance_data():
+    ins_data = pd.read_csv(insurance_path)
+    print(colored("Insurance data imported!", 'green'))
+    return ins_data
