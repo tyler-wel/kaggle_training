@@ -69,3 +69,8 @@ def import_spotify():
     spotify_data = pd.read_csv(spotify_path, index_col="Date", parse_dates=True)
     print(colored("Spotify data imported!", 'green'))
     return spotify_data
+
+def import_flight_delays():
+    flight_delay_data = pd.read_csv(flight_delays_path, index_col="Month")
+    print(colored("Flight delay data imported!", 'green'))
+    return flight_delay_data
