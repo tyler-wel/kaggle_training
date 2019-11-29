@@ -79,3 +79,23 @@ def import_insurance_data():
     ins_data = pd.read_csv(insurance_path)
     print(colored("Insurance data imported!", 'green'))
     return ins_data
+
+def import_flower_data():
+    flw = pd.read_csv(iris_path, index_col="Id")
+    print(colored("Iris flower data imported!", 'green'))
+    return flw
+
+def import_iris_set():
+    iris_s = pd.read_csv(iris_setosa_path, index_col=("Id"))
+    print(colored("Iris setosa data imported", 'green'))
+    return iris_s
+    
+def import_iris_ver():
+    iris_ver = pd.read_csv(iris_versicolor_path, index_col=("Id"))
+    print(colored("Iris versicolo data imported", 'green'))
+    return iris_ver
+
+def import_iris_vir():
+    iris_vir = pd.read_csv(iris_virginica_path, index_col=("Id"))
+    print(colored("Iris virignica data imported", 'green'))
+    return iris_vir  
