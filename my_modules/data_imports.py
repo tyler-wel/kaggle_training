@@ -54,6 +54,10 @@ spotify_path = ("./datasets/data-vis/spotify.csv")
 if not os.path.exists(spotify_path):
     failed_import(spotify_path)
 
+wine_path = ("./datasets/pandas/winemag.csv")
+if not os.path.exists(wine_path):
+    failed_import(wine_path)
+
 def failed_import(file_name):
     print(colored(file_name + " doesn't exist", 'red'))
     
@@ -99,3 +103,8 @@ def import_iris_vir():
     iris_vir = pd.read_csv(iris_virginica_path, index_col=("Id"))
     print(colored("Iris virignica data imported", 'green'))
     return iris_vir  
+
+def import_wine_data():
+    wine_data = pd.read_csv(wine_path, index_col=0)
+    print(colored("Wine data imported", 'green'))
+    return wine_data
