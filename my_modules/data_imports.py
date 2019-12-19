@@ -58,6 +58,14 @@ wine_path = ("./datasets/pandas/winemag.csv")
 if not os.path.exists(wine_path):
     failed_import(wine_path)
 
+youtube_ca_path = ("./datasets/pandas/CAvideos.csv")
+if not os.path.exists(youtube_ca_path):
+    failed_import(youtube_ca_path)
+
+youtube_gb_path = ("./datasets/pandas/GBvideos.csv")
+if not os.path.exists(youtube_gb_path):
+    failed_import(youtube_gb_path)
+
 def failed_import(file_name):
     print(colored(file_name + " doesn't exist", 'red'))
     
@@ -108,3 +116,13 @@ def import_wine_data():
     wine_data = pd.read_csv(wine_path, index_col=0)
     print(colored("Wine data imported", 'green'))
     return wine_data
+
+def import_youtube_ca_data():
+    youtube_ca = pd.read_csv(youtube_ca_path)
+    print(colored("CAVideos data imported", 'green'))
+    return youtube_ca
+
+def import_youtube_gb_data():
+    youtube_gb = pd.read_csv(youtube_gb_path)
+    print(colored("GBVideos data imported", 'green'))
+    return youtube_gb
