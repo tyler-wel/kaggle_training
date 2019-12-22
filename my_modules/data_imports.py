@@ -19,6 +19,7 @@ wine_path = ("./datasets/pandas/winemag.csv")
 youtube_ca_path = ("./datasets/pandas/CAvideos.csv")
 youtube_gb_path = ("./datasets/pandas/GBvideos.csv")    
 kickstarter_2018_path = ("./datasets/feature_engineering/ks-projects-201801.csv")
+ad_clicks_path = ("./datasets/feature_engineering/train_sample.csv")
 
 # Note:
 # - index_col param is generally the name of the first column, used to index our data
@@ -113,3 +114,10 @@ def import_kickstarter_2018_data():
     kickstarter = pd.read_csv(kickstarter_2018_path, parse_dates=['deadline', 'launched'])
     print(colored("Kickstarter 2018 data imported", 'green'))
     return kickstarter
+
+def import_ad_clicks_data():
+    if not check_existance(ad_clicks_path):
+        return None
+    ad_clicks = pd.read_csv(ad_clicks_path, parse_dates=['click_time'])
+    print(colored("Ad Click data imported", 'green'))
+    return ad_clicks
