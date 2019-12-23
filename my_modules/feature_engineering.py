@@ -72,7 +72,7 @@ def train_ad_model(train, valid, test=None, feature_cols=None):
     bst = lgb.train(params, dtrain, num_round, valid_sets=[dvalid], early_stopping_rounds=20, verbose_eval=False)
     valid_pred = bst.predict(valid[feature_cols])
     valid_score = metrics.roc_auc_score(valid['is_attributed'], valid_pred)
-    print(f"Validation AUC score: {valid_score}")
+    print(f"Validation AUC score: {valid_score:.4f}")
     
     if test is not None:
         test_pred = bst.predict(test[feature_cols])
