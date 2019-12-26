@@ -1,7 +1,7 @@
 # helper functions for feature engineering
 import lightgbm as lgb
 from sklearn import metrics
-from termcolor import colored # colored prints
+from termcolor import colored, cprint # colored prints
 
 
 def get_kickstarter_splits(dataframe, valid_fraction=0.1):
@@ -80,3 +80,8 @@ def train_ad_model(train, valid, test=None, feature_cols=None):
         return bst, valid_score, test_score
     else:
         return bst, valid_score
+    
+def print_scores(scores):
+    cprint('Scores so far...', 'green')
+    for key in scores:
+        print(f"{key}: {scores[key]:.4f}")
