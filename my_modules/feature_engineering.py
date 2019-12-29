@@ -8,8 +8,8 @@ def get_kickstarter_splits(dataframe, valid_fraction=0.1):
     """
     Splits a dataframe into train, validation, and test sets. 
     Set the size of the validation and test sets with valid_fraction.
-        :param dataframe: Pandas dataframe to be split
-        :param valid_fraction=0.1: % to split data by (default 0.1)
+        dataframe: Pandas dataframe to be split
+        valid_fraction: % to split data by (default 0.1)
     """
     valid_size = int(len(dataframe) * valid_fraction)
     train = dataframe[ : -valid_size * 2]
@@ -24,8 +24,8 @@ def get_ad_splits(dataframe, valid_fraction=0.1):
     Splits a dataframe into train, validation, and test sets. First
     orders by the column 'click_time'. Set the size of the validation
     and test sets with valid_fraction.
-        :param dataframe: Pandas dataframe to be split
-        :param valid_fraction=0.1: % to split data by (default 0.1)
+        dataframe: Pandas dataframe to be split
+        valid_fraction: % to split data by (default 0.1)
     """
     dataframe = dataframe.sort_values('click_time')
     valid_rows = int(len(dataframe) * valid_fraction)
@@ -37,8 +37,8 @@ def get_ad_splits(dataframe, valid_fraction=0.1):
 def train_kickstarter_model(train, valid):
     """
     Trains kickstarter model based on provided train and validation datasets.
-        :param train: Training set
-        :param valid: Validation set
+        train: Training set
+        valid: Validation set
     """
     feature_cols = train.columns.drop('outcome')
 
@@ -56,10 +56,10 @@ def train_kickstarter_model(train, valid):
 def train_ad_model(train, valid, test=None, feature_cols=None):
     """
     Trains ad clicks model based on provided train and validation datasets.
-        :param train: Training set
-        :param valid: Validation set
-        :param test: Test set (optional)
-        :param feature_cols: Feature columns (optional)
+        train: Training set
+        valid: Validation set
+        test: Test set (optional)
+        feature_cols: Feature columns (optional)
     """
     if feature_cols is None:
         feature_cols = train.columns.drop(['click_time', 'attributed_time', 'is_attributed'])
@@ -85,3 +85,6 @@ def print_scores(scores):
     cprint('Scores so far...', 'green')
     for key in scores:
         print(f"{key}: {scores[key]:.4f}")
+    m = max(scores, key=scores.get)
+    
+    cprint(f'Best score so far: {m} : {scores[m]:.4f}', 'cyan')
