@@ -4,16 +4,22 @@ from PIL import Image
 import numpy as np
 import matplotlib.pyplot as plt
 from termcolor import cprint # colored prints
+import json
 
-img_dict = {'dog_1' : "./images/dogs/train/00a338a92e4e7bf543340dc849230e75.jpg",
-            'dog_2' : "./images/dogs/train/0b345d4f2434903c374ad8b8513a289b.jpg"}
+train_path = "./images/dogs/train/"
+
+img_dict = {'dog_1' : "00a338a92e4e7bf543340dc849230e75.jpg",
+            'dog_2' : "0b345d4f2434903c374ad8b8513a289b.jpg",
+            'dog_3' : "0db44ddb42bf1f97de987abe2bf01839.jpg",
+            'dog_4' : "01f8540fb1084107a6eb3e528f82c1aa.jpg"}
 
 
 # The below functions are copy and pasted (very slightly modified) from the Kaggle/learntools repository for learning purposes
 
+# Exercise 1
 def load_my_image(key):
     '''returns array containing greyscale values for supplied file (at thumbnail size)'''
-    image_color = Image.open(img_dict[key]).resize((135, 188), Image.ANTIALIAS)
+    image_color = Image.open(os.path.join(train_path, img_dict[key]) ).resize((135, 188), Image.ANTIALIAS)
     image_grayscale = image_color.convert('L')
     image_array = np.asarray(image_grayscale)
     return(image_array)
@@ -71,3 +77,32 @@ def show(image, scale_before_display=True, title=''):
     plt.axis('off')
     plt.title(title)
     plt.show()
+
+# Exercise 3
+def decode_predictions(preds, top=5, class_list_path='./pre-trained/resnet50/imagenet_class_index.json'):
+  """Decodes the prediction of an ImageNet model.
+  Arguments:
+      preds: Numpy tensor encoding a batch of predictions.
+      top: integer, how many top-guesses to return.
+      class_list_path: Path to the canonical imagenet_class_index.json file
+  Returns:
+      A list of lists of top class prediction tuples
+      `(class_name, class_description, score)`.
+      One list of tuples per sample in batch input.
+  Raises:
+      ValueError: in case of invalid shape of the `pred` array
+          (must be 2D).
+  """
+  if len(preds.shape) != 2 or preds.shape[1] != 1000:
+    raise ValueError('`decode_predictions` expects '
+                     'a batch of predictions '
+                     '(i.e. a 2D array of shape (samples, 1000)). '
+                     'Found array with shape: ' + str(preds.shape))
+  CLASS_INDEX = json.load(open(class_list_path))
+  results = []
+  for pred in preds:
+    top_indices = pred.argsort()[-top:][::-1]
+    result = [tuple(CLASS_INDEX[str(i)]) + (pred[i],) for i in top_indices]
+    result.sort(key=lambda x: x[2], reverse=True)
+    results.append(result)
+  return results
