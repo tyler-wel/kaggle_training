@@ -1,30 +1,38 @@
 from termcolor import cprint
 
 def get_splits(dataframe, valid_fraction=0.1):
-    """
-    Splits a dataframe into train, validation, and test sets. 
-    Set the size of the validation and test sets with valid_fraction.
-        dataframe: Pandas dataframe to be split
-        valid_fraction: % to split data by (default 0.1)
-    """
-    valid_rows = int(len(dataframe) * valid_fraction)
-    train = dataframe[ : -valid_rows * 2 ]
-    valid = dataframe[ - valid_rows * 2 : -valid_rows]
-    test = dataframe[ -valid_rows : ]
-    return train, valid, test
+  """
+  Splits a dataframe into train, validation, and test sets. 
+  Set the size of the validation and test sets with valid_fraction.
+      dataframe: Pandas dataframe to be split
+      valid_fraction: % to split data by (default 0.1)
+  """
+  valid_rows = int(len(dataframe) * valid_fraction)
+  train = dataframe[ : -valid_rows * 2 ]
+  valid = dataframe[ - valid_rows * 2 : -valid_rows]
+  test = dataframe[ -valid_rows : ]
+  return train, valid, test
 
 from itertools import combinations
-def process_titanic(df, cat_col, num_col):
+def preprocess_titanic(df, cat_col, num_col):
   """
     Process the Titanic dataset
       df: Pandas dataframe
       cat_col: categorical features
       num_col: numerical features
   """
+  # cols_with_missing = (col for col in train_data.columns if train_data[col].isnull().any())
+    # for col in cols_with_missing:
+      # print(col) # Age, Cabin, Embarked
+  df['Age'].fillna(-1, inplace=True)
+  df['Cabin'].fillna('NotSpecified', inplace=True)
+  df['Embarked'].fillna('NA', inplace=True)
   # interactions
   for comb in combinations(cat_col, 2):
     new_feat = comb[0] + "_" + comb[1]
     df[new_feat] = df[comb[0]].astype(str) + "_" + df[comb[1]].astype(str)
+    
+  # interact where family name is same?
   return(df)
 
 
@@ -46,18 +54,18 @@ class PipelineFS(Pipeline):
 from sklearn.base import BaseEstimator, TransformerMixin
 
 class TextSelector(BaseEstimator, TransformerMixin):
-    """
-    Transformer to select a single column from the data frame to perform additional transformations on
-    Use on text columns in the data
-    """
-    def __init__(self, key):
-        self.key = key
+  """
+  Transformer to select a single column from the data frame to perform additional transformations on
+  Use on text columns in the data
+  """
+  def __init__(self, key):
+    self.key = key
 
-    def fit(self, X, y=None):
-        return self
+  def fit(self, X, y=None):
+    return self
 
-    def transform(self, X):
-        return X[self.key]
+  def transform(self, X):
+    return X[self.key]
     
 class NumberSelector(BaseEstimator, TransformerMixin):
     """
